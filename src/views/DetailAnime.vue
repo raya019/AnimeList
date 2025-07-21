@@ -1,0 +1,125 @@
+<script setup>
+import Card from '@/components/card/Card.vue'
+import CardDetail from '@/components/card/CardDetail.vue'
+import ContainerDetailAnime from '@/components/ContainerDetailAnime.vue'
+import Loading from '@/components/loaders/Loading.vue'
+import Reviews from '@/components/Reviews.vue'
+import Title from '@/components/Title.vue'
+import FadeTrasitionGroup from '@/components/transition/FadeTrasitionGroup.vue'
+import { getAnime } from '@/util/api.js'
+import { useLoading } from '@/util/store'
+import { computed, ref, onMounted, onUnmounted } from 'vue'
+
+const store = useLoading()
+const { id } = defineProps(['id'])
+const detail = ref(null)
+const characters = ref(null)
+const reviews = ref(null)
+const recomendations = ref(null)
+const selectedIdReviews = ref(null)
+const isModalReviewOpen = ref(true)
+
+onMounted(async () => {
+  store.resetLoading()
+  try {
+    const [api, character, review, recomendation] = await Promise.all([
+      getAnime(`anime/${id}/full`),
+      getAnime(`anime/${id}/characters`),
+      getAnime(`anime/${id}/reviews?preliminary=true&spoiler=false`),
+      getAnime(`anime/${id}/recommendations`),
+    ])
+
+    detail.value = api.data.data
+    characters.value = character.data.data
+    reviews.value = review.data.data
+    recomendations.value = recomendation.data.data
+  } catch (error) {
+    console.log(error)
+  } finally {
+    store.updateLoading()
+  }
+})
+
+const handlerReviews = (review) => {
+  selectedIdReviews.value = review
+  isModalReviewOpen.value = false
+}
+
+const information = computed(() => {
+  if (!detail.value) return {}
+  return {
+    TitleJapanese: detail.value.title_japanese,
+    Type: detail.value.type,
+    Episode: detail.value.episodes,
+    Status: detail.value.status,
+    Producers: detail.value.producers.map((item) => item.name).join(', ') || '',
+    Studios: detail.value.studios.map((item) => item.name).join(', ') || '',
+    Source: detail.value.source,
+    Genre: detail.value.genres.map((item) => item.name).join(', ') || '',
+    Theme: detail.value.themes.map((item) => item.name).join(', ') || '',
+    Duration: detail.value.duration,
+  }
+})
+
+const reactions = computed(() => {
+  if (!reviews.value) return {}
+  return {
+    overall: '😀',
+    nice: '👍',
+    love_it: '😍',
+    confusing: '😵',
+    funny: '😂',
+  }
+})
+
+onUnmounted(() => {
+  store.resetLoading()
+})
+</script>
+
+<template>
+  <FadeTrasitionGroup>
+    <Loading v-if="store.getLoading" />
+    <template v-else>
+      <ContainerDetailAnime :obj="detail" :information="information" />
+
+      <!-- Characters -->
+      <Title title="Characters" :class-css="['ms-10', 'mt-5']" />
+
+      <div class="mt-10 flex flex-wrap justify-center gap-4 lg:gap-5 lg:px-5">
+        <Card
+          v-for="i in characters"
+          :key="i.character.mal_id"
+          :src="i.character.images.webp.image_url"
+          :alt="i.character.name"
+          :style-class="['relative h-56 w-32 lg:w-48 lg:h-72']"
+        >
+          <div class="absolute left-0 top-0 w-fit rounded-br-md bg-sky-800/70 p-2">
+            <h1 class="text-xs text-purple-200 lg:text-sm">{{ i.role }}</h1>
+          </div>
+
+          <div class="absolute bottom-0 right-0 w-fit rounded-tl-md bg-sky-800/70 p-2">
+            <h1 class="line-clamp-1 text-xs text-purple-200 lg:text-sm">{{ i.character.name }}</h1>
+          </div>
+        </Card>
+      </div>
+
+      <!-- Review -->
+      <Title title="Reviews" :class-css="['ms-10', 'mt-5']" />
+
+      <Reviews
+        :reviews="reviews"
+        :reactions="reactions"
+        :is-modal-review-open="isModalReviewOpen"
+        :selected-id-reviews="selectedIdReviews"
+        @handler-reviews="handlerReviews"
+        @handler-close-modal-review="() => (isModalReviewOpen = true)"
+      />
+
+      <!-- Recommendations -->
+      <Title title="Recomendations" :class-css="['ms-10 mt-5']" />
+
+      <CardDetail :obj="recomendations" />
+    </template>
+  </FadeTrasitionGroup>
+</template>

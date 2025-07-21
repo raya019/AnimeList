@@ -1,0 +1,13 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+body {
+  @apply font-mono;
+  background-color: #212121;
+}
+
+.swiper-pagination-fraction {
+  @apply font-bold;
+  color: oklch(0.902 0.063 306.703) !important;
+}
