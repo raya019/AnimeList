@@ -7,15 +7,11 @@ import Reviews from '@/components/Reviews.vue'
 import Title from '@/components/Title.vue'
 import FadeTrasitionGroup from '@/components/transition/FadeTrasitionGroup.vue'
 import { useDetailAnime, useLoading } from '@/util/store'
-import { computed, onMounted, onUnmounted, ref, onBeforeMount } from 'vue'
+import { computed, onBeforeMount, onUnmounted, ref } from 'vue'
 import { useRoute } from 'vue-router'
 
 const store = useLoading()
 const route = useRoute()
-// const detailAnime = ref(null)
-// const characters = ref(null)
-// const reviews = ref(null)
-// const recomendations = ref(null)
 const selectedIdReviews = ref(null)
 const isModalReviewOpen = ref(true)
 const detail = useDetailAnime()
@@ -28,22 +24,6 @@ const handlerReviews = (review) => {
   selectedIdReviews.value = review
   isModalReviewOpen.value = false
 }
-
-// const information = computed(() => {
-//   if (!detailAnime.value) return {}
-//   return {
-//     TitleJapanese: detailAnime.value.title_japanese,
-//     Type: detailAnime.value.type,
-//     Episode: detailAnime.value.episodes,
-//     Status: detailAnime.value.status,
-//     Producers: detailAnime.value.producers.map((item) => item.name).join(', ') || '',
-//     Studios: detailAnime.value.studios.map((item) => item.name).join(', ') || '',
-//     Source: detailAnime.value.source,
-//     Genre: detailAnime.value.genres.map((item) => item.name).join(', ') || '',
-//     Theme: detailAnime.value.themes.map((item) => item.name).join(', ') || '',
-//     Duration: detailAnime.value.duration,
-//   }
-// })
 
 const information = computed(() => {
   if (!detail.detailAnime) return {}
@@ -60,17 +40,6 @@ const information = computed(() => {
     Duration: detail.detailAnime.duration,
   }
 })
-
-// const reactions = computed(() => {
-//   if (!reviews.value) return {}
-//   return {
-//     overall: '😀',
-//     nice: '👍',
-//     love_it: '😍',
-//     confusing: '😵',
-//     funny: '😂',
-//   }
-// })
 
 const reactions = computed(() => {
   if (!detail.reviews) return {}
