@@ -6,7 +6,7 @@ import FadeTrasition from '@/components/transition/FadeTrasition.vue'
 import FadeTrasitionGroup from '@/components/transition/FadeTrasitionGroup.vue'
 import { getAnime } from '@/util/api'
 import { useButtonPage, useLoading, useLoadingCard } from '@/util/store'
-import { onUnmounted, ref, watch, onMounted } from 'vue'
+import { onUnmounted, ref, watch, onBeforeMount } from 'vue'
 import { useRouter, useRoute } from 'vue-router'
 
 const route = useRoute()
@@ -43,7 +43,7 @@ const fetchAnime = async () => {
   }
 }
 
-onMounted(() => {
+onBeforeMount(() => {
   const pageFromQuery = parseInt(route.query.page)
   if (!isNaN(pageFromQuery) && pageFromQuery > 0) {
     button.currentPage = pageFromQuery
@@ -77,8 +77,8 @@ onUnmounted(() => {
         @next-page="button.nextPage()"
       />
 
-      <div class="ms-20 mt-10">
-        <p class="text-lg text-neutral-600">
+      <div class="mt-5 text-center lg:mt-10">
+        <p class="text-sm text-neutral-600 lg:text-lg">
           Search Result {{ (button.currentPage - 1) * perPage + 1 }} -
           {{ count + (button.currentPage - 1) * perPage }} of {{ total }}
         </p>

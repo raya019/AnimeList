@@ -1,12 +1,6 @@
 import { createWebHistory, createRouter } from 'vue-router'
 
 const routes = [
-  // {
-  //   path: '/',
-  //   name: 'home',
-  //   component: () => import('@/views/Home.vue'),
-  // },
-
   {
     path: '/',
     name: 'layout',
@@ -23,18 +17,17 @@ const routes = [
       },
 
       {
-        path: '/detail/:id(\\d+)',
+        path: 'detail/:id',
         name: 'detail',
         components: {
           default: () => import('@/views/DetailAnime.vue'),
           header: () => import('@/components/Navbar.vue'),
           footer: () => import('@/components/footer/Footer.vue'),
         },
-        props: true,
       },
 
       {
-        path: 'genre/:id(\\d+)',
+        path: 'genre/:id',
         name: 'genre',
         components: {
           default: () => import('@/views/GenresAnime.vue'),
@@ -54,25 +47,6 @@ const routes = [
       },
     ],
   },
-
-  // {
-  //   name: 'detail',
-  //   path: '/detail/:id(\\d+)',
-  //   component: () => import('@/views/DetailAnime.vue'),
-  //   props: true,
-  // },
-
-  // {
-  //   name: 'genre',
-  //   path: '/genre/:id',
-  //   component: () => import('@/views/GenresAnime.vue'),
-  // },
-
-  // {
-  //   name: 'sectionAnime',
-  //   path: '/anime/:nameSection',
-  //   component: () => import('@/views/SectionAnime.vue'),
-  // },
 ]
 
 const router = createRouter({

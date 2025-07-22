@@ -1,6 +1,6 @@
 <script setup>
 import CardLink from './CardLink.vue'
-defineProps({
+const { data } = defineProps({
   data: {
     type: Array,
   },

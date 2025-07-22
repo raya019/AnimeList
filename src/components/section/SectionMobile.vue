@@ -20,12 +20,12 @@ defineProps({
       }"
       :breakpoints="{
         320: {
-          spaceBetween: 30,
-          slidesPerView: 3,
+          spaceBetween: 50,
+          slidesPerView: 2,
         },
         570: {
           spaceBetween: 10,
-          slidesPerView: 3.5,
+          slidesPerView: 1,
         },
         768: {
           slidesPerView: 5,

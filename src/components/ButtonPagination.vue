@@ -4,7 +4,7 @@ defineProps(['currentPage', 'lastPage', 'buttonPage'])
 </script>
 
 <template>
-  <div class="mt-20 flex justify-center gap-x-3">
+  <div class="mt-20 flex justify-center gap-x-1 lg:gap-x-3">
     <button @click="$emit('prevPage')" :disabled="currentPage === 1">
       <svg
         xmlns="http://www.w3.org/2000/svg"
@@ -27,7 +27,7 @@ defineProps(['currentPage', 'lastPage', 'buttonPage'])
       :key="i"
       @click="$emit('clickButtonPage', i)"
       :class="[
-        'w-10 rounded-lg p-1 text-yellow-200 hover:bg-sky-800 hover:text-yellow-300',
+        'w-5 rounded-lg p-1 text-sm text-yellow-200 hover:bg-sky-800 hover:text-yellow-300 lg:text-base',
         { 'bg-sky-800 text-yellow-300': i === currentPage },
       ]"
     >

@@ -19,11 +19,11 @@ watchEffect(async () => {
 </script>
 
 <template>
-  <FadeTrasition>
+  <FadeTrasitionGroup>
     <Loading v-if="isLoading" />
     <template v-else>
       <CardHome :data="data" />
       <SectionMobile :data="data" />
     </template>
-  </FadeTrasition>
+  </FadeTrasitionGroup>
 </template>

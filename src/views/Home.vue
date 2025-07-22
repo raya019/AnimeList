@@ -12,12 +12,12 @@ import Title from '@/components/Title.vue'
 import FadeTrasitionGroup from '@/components/transition/FadeTrasitionGroup.vue'
 import { useApiHome } from '@/util/store'
 import { useLoading } from '@/util/store.js'
-import { onMounted, onUnmounted, ref } from 'vue'
+import { onMounted, onUnmounted, ref, onBeforeMount } from 'vue'
 
 const data = useApiHome()
 const loadingStore = useLoading()
 
-onMounted(() => {
+onBeforeMount(async () => {
   data.getData()
 })
 

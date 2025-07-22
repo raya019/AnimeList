@@ -42,10 +42,6 @@ const handlerCloseModal = () => {
   })
 }
 
-const handlerCloseSeacrhModal = () => {
-  isSearchModalOpen.value = true
-}
-
 watch(
   () => search.value,
   async (newVal) => {
@@ -84,7 +80,11 @@ onUnmounted(() => {
     ]"
   >
     <nav class="relative flex gap-5 p-3 lg:ms-10 lg:gap-20">
-      <h1 class="ps-1 text-lg font-bold text-purple-200 hover:text-purple-300">AnimeList</h1>
+      <router-link
+        :to="{ name: 'home' }"
+        class="ps-1 text-lg font-bold text-purple-200 hover:text-purple-300"
+        >AnimeList</router-link
+      >
     </nav>
 
     <nav class="me-auto hidden items-center justify-center gap-10 ps-10 lg:flex">

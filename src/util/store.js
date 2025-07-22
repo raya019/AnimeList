@@ -77,7 +77,7 @@ export const useApiHome = defineStore('apiHome', () => {
     try {
       const [carouselResponse, seasonAnime, animeGenre, popular] = await Promise.all([
         getAnime('top/anime?limit=5&page=1&type=movie'),
-        getAnime('https://api.jikan.moe/v4/seasons/now?limit=10&page=1'),
+        getAnime('seasons/now?limit=10&page=1'),
         getAnime('genres/anime'),
         getAnime('top/anime?filter=bypopularity&page=1&limit=10'),
       ])
@@ -94,4 +94,36 @@ export const useApiHome = defineStore('apiHome', () => {
   }
 
   return { getData, dataCarousel, dataSeasonAnime, dataAnimeGenres, dataPopular }
+})
+
+export const useDetailAnime = defineStore('detailAnime', () => {
+  const loadingStore = useLoading()
+
+  const detailAnime = ref(null)
+  const characters = ref(null)
+  const reviews = ref(null)
+  const recomendations = ref(null)
+
+  const handlerAnime = async (id) => {
+    loadingStore.resetLoading()
+    try {
+      const [api, character, review, recomendation] = await Promise.all([
+        getAnime(`anime/${id}/full`),
+        getAnime(`anime/${id}/characters`),
+        getAnime(`anime/${id}/reviews?preliminary=true&spoiler=false`),
+        getAnime(`anime/${id}/recommendations`),
+      ])
+
+      detailAnime.value = api.data.data
+      characters.value = character.data.data
+      reviews.value = review.data.data
+      recomendations.value = recomendation.data.data
+    } catch (error) {
+      console.log(error)
+    } finally {
+      loadingStore.updateLoading()
+    }
+  }
+
+  return { detailAnime, characters, reviews, recomendations, handlerAnime }
 })
