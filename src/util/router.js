@@ -45,6 +45,16 @@ const routes = [
           footer: () => import('@/components/footer/Footer.vue'),
         },
       },
+
+      {
+        path: 'search/:searchAnime',
+        name: 'searchAnime',
+        components: {
+          default: () => import('@/views/SearchAnime.vue'),
+          header: () => import('@/components/Navbar.vue'),
+          footer: () => import('@/components/footer/Footer.vue'),
+        },
+      },
     ],
   },
 ]

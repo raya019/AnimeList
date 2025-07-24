@@ -18,19 +18,13 @@ const count = ref(null)
 const perPage = ref(null)
 const total = ref(null)
 const router = useRouter()
-let skip = false
 
 const fetchAnime = async () => {
-  router.replace({
-    params: { nameSection: route.params.nameSection },
-    query: { page: button.currentPage },
-  })
+  router.replace({ query: { page: button.currentPage } })
   loadingCard.resetLoadingCard()
 
   try {
-    const res = await getAnime(
-      `top/anime?filter=${route.params.nameSection}&page=${button.currentPage}`,
-    )
+    const res = await getAnime(`anime?q=${route.params.searchAnime}&page=${button.currentPage}`)
 
     data.value = res.data.data
     button.lastPage = res.data.pagination.last_visible_page
@@ -56,21 +50,8 @@ onBeforeMount(() => {
 })
 
 watch(
-  [() => route.params.nameSection, () => button.currentPage],
-  async ([newSection, newPage], [oldSection, oldPage]) => {
-    if (newSection !== oldSection) {
-      skip = true
-      button.$reset()
-      loading.resetLoading()
-      await fetchAnime()
-    } else if (newPage !== oldPage) {
-      if (skip) {
-        skip = false
-        return
-      }
-      await fetchAnime()
-    }
-  },
+  () => button.currentPage,
+  () => fetchAnime(),
 )
 
 onUnmounted(() => {
