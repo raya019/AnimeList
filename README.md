@@ -1,35 +1,72 @@
-# movielist
 
-This template should help get you started developing with Vue 3 in Vite.
+# 🔍 Preview
 
-## Recommended IDE Setup
+animeelistt.netlify.app
 
-[VSCode](https://code.visualstudio.com/) + [Volar](https://marketplace.visualstudio.com/items?itemName=Vue.volar) (and disable Vetur).
+---
 
-## Customize configuration
 
-See [Vite Configuration Reference](https://vite.dev/config/).
+# 📋 Anime List
 
-## Project Setup
+AnimeList is a simple web application for browsing and managing a list of anime. It fetches anime data from the **[Jikan API](https://jikan.moe/)**, which is an unofficial MyAnimeList API, to display information such as anime titles, genres, synopses, and images. This website is built with **Vuejs**, and **Tailwind**.
 
-```sh
-pnpm install
+
+
+
+
+## 🚀 Installation
+
+### 1️⃣ Using Docker
+
+#### Clone Repository
+```bash
+https://github.com/raya019/AnimeList.git
+cd your-project
+```
+#### Build Docker Image
+
+```bash
+docker build -t animelist .
 ```
 
-### Compile and Hot-Reload for Development
-
-```sh
-pnpm dev
+#### Run Container
+```bash
+docker run -d -p 3000:3000 animelist
 ```
 
-### Compile and Minify for Production
+And the application will be accessible at: http://localhost:3000
 
-```sh
-pnpm build
+#### 📄 Notes
+
+- You can change the exposed port (3000) based on your preference by editing the -p parameter. example 5173:3000 and the application will be accessible at: http://localhost:5173
+
+### 2️⃣ Run Locally
+
+Clone the project
+
+```bash
+  git clone https://github.com/raya019/AnimeList.git
+
 ```
 
-### Lint with [ESLint](https://eslint.org/)
+Go to the project directory
 
-```sh
-pnpm lint
+```bash
+  cd your-project
 ```
+
+**Install dependencies**
+
+This project uses pnpm by default
+
+```bash
+  pnpm install
+```
+**Start the server**
+
+```bash
+pnpm run dev
+```
+
+
+    
